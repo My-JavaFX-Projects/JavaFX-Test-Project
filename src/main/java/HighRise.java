@@ -1,16 +1,17 @@
 public class HighRise extends Building{
-    public static int numberOfFloors;
+    public  int numberOfFloors;
 
     public HighRise(String name, double xPosition,int numberOfFloors) {
-
+        super(name, xPosition);
+        this.numberOfFloors = numberOfFloors;
     }
 
 
-    public static int getNumberOfFloors() {
+    public  int getNumberOfFloors() {
         return numberOfFloors;
     }
 
     public String toString() {
-        return "Jimi";
+        return null;
     }
 }

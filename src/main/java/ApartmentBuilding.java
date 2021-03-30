@@ -1,35 +1,53 @@
-import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-public class ApartmentBuilding extends HighRise implements Dwelling{
-    public static int occupantsPerFloor;
+import java.util.Scanner;
 
-    public ApartmentBuilding(String name, double xPosition,int occupantsPerFloor,int numberOfFloors) {
+public class ApartmentBuilding extends HighRise implements Dwelling{
+    public  int occupantsPerFloor;
+
+    public ApartmentBuilding(String name, double xPosition,int numberOfFloors,int occupantsPerFloor) {
         super(name, xPosition,numberOfFloors);
         this.occupantsPerFloor = occupantsPerFloor;
     }
 
 
-    private ApartmentBuilding create() {
-        ApartmentBuilding apartmentBuilding = new ApartmentBuilding("name",5,5,6);
-        return apartmentBuilding;
+    public static ApartmentBuilding create() {
+        Scanner userInput = new Scanner(System.in);
+        System.out.println("Write the name of Apartment:");
+        String nameOfApartment = userInput.nextLine();
+        System.out.println("Write the number of floors:");
+        int numberOfFloors = userInput.nextInt();
+        System.out.println("Write the number of occupants per floor:");
+        int numberOfOccupantsPerFloor = userInput.nextInt();
+        return new ApartmentBuilding(nameOfApartment, 0,numberOfFloors,numberOfOccupantsPerFloor);
     }
 
-    public GraphicsContext draw(GraphicsContext graphicsContext) {
-//        Canvas canvas = new Canvas(500,500);
-//        graphicsContext = canvas.getGraphicsContext2D();
+    public void draw(GraphicsContext graphicsContext) {
+        Village village = new Village("some",1);
+        int heightOfAprtment = numberOfFloors*40+20;
         graphicsContext.setFill(Color.DARKBLUE);
-        graphicsContext.fillRect(250,200,90,180);
-        return graphicsContext;
+        graphicsContext.fillRect(xPosition,village.getY_FLOOR()-heightOfAprtment,90,heightOfAprtment);
+        for (int i =0; i<numberOfFloors; i++) {
+            graphicsContext.setFill(Color.WHITE);
+            graphicsContext.fillRect(xPosition + 10, village.getY_FLOOR() - heightOfAprtment+5+i*40, 25, 25);
+            graphicsContext.setFill(Color.WHITE);
+            graphicsContext.fillRect(xPosition + 55, village.getY_FLOOR() - heightOfAprtment+5+i*40, 25, 25);
+        }
     }
+
 
     @Override
-    public int getNumberOfOccupants() {
-        return 100;
+    public  int getNumberOfOccupants() {
+        int occupants = occupantsPerFloor * numberOfFloors;
+        return occupants;
     }
 
     public String toString() {
-        return "Jimi";
+        String details = "ApartmentBuilding: occupantsPerFloor=" + occupantsPerFloor + "\n"
+                + "Type... HighRise: numberOfFloors=" + numberOfFloors + "\n"
+                + "Type...Building: name="+name + ", xPosition=" + xPosition + "\n";
+        System.out.println(details);
+        return details;
     }
 }

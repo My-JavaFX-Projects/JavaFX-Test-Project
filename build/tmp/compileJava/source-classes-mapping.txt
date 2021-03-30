@@ -1,18 +1,18 @@
-HighRise.java
- HighRise
-ApartmentBuilding.java
- ApartmentBuilding
 Drawable.java
  Drawable
-Building.java
- Building
-StarterOfProgram.java
- StarterOfProgram
 Dwelling.java
  Dwelling
-House.java
- House
+HighRise.java
+ HighRise
 Main.java
  Main
+ApartmentBuilding.java
+ ApartmentBuilding
+Building.java
+ Building
+House.java
+ House
 Village.java
  Village
+StarterOfProgram.java
+ StarterOfProgram

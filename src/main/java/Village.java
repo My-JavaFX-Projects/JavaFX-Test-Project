@@ -1,22 +1,19 @@
-import javafx.scene.canvas.Canvas;
+import javafx.application.Application;
 import javafx.scene.canvas.GraphicsContext;
 
-import java.util.Arrays;
-import java.util.Objects;
 import java.util.Scanner;
 
-public class Village extends Building {
-    private double Y_FLOOR = 50;
-    public static int size;
-    public static String name;
-    public static Building[] buildings;
+public class Village {
+    private double Y_FLOOR = 300;
+    public  int size;
+    public  String name;
+    public  Building[] buildings;
 
     public Village(String name, int size) {
 
         this.name = name;
         this.size = size;
         buildings = new Building[size];
-
     }
 
 
@@ -27,52 +24,62 @@ public class Village extends Building {
         System.out.println("Write the size of Village:");
         int villageSize = userInput.nextInt();
         Village village = new Village(villageName,villageSize);
-//        for(int i=0; i< buildings.length; i++){
-            buildings[0] = new House("jimi1", 1, 1, 1);
-        buildings[1] = new House("jimi2", 2, 2, 2);
-
-
-//        }
-        System.out.println(Arrays.toString(buildings));
-        int populationOfVillage = village.getPopulation();
-        System.out.println("The population of Village:"+populationOfVillage);
-
+        for (int i = 0; i < village.buildings.length; i++) {
+            village.buildings[i] = village.getBuilding();
+        }
+        village.toString();
         return village;
     }
 
     public  int getPopulation() {
         int population = 0;
         for(int i=0; i< buildings.length; i++){
-//            population = population +buildings[i].;
+            if (buildings[i] instanceof House) {
+                population += ((House) buildings[i]).getNumberOfOccupants();
+            }
+            else {
+                population += ((ApartmentBuilding) buildings[i]).getNumberOfOccupants();
+            }
         }
 
         return population;
     }
 
-//    public Canvas draw(GraphicsContext graphicsContext) {
-//        Canvas
-//    }
-    public static int getSize() {
-        return size;
+    public double getY_FLOOR() {
+        return Y_FLOOR;
+    }
+
+    public  void draw() {
+
+       StarterOfProgram.setBuildings(buildings);
+        StarterOfProgram.nameOfVillage = name;
+        Application.launch(StarterOfProgram.class);
     }
 
     public String toString() {
-        System.out.println("Village of "+this.name);
+        System.out.println("Village of "+this.name + "\n");
 
         for(int j=0; j< buildings.length; j++){
-            System.out.println(buildings[j].toString());
+            buildings[j].toString();
         }
         return this.name;
     }
 
-//    public Building getBuilding(String type) {
-//        if (type == null) {
-//            return null;
-//        }
-//        if (type == "house") {
-//            return new House();
-//        }
-//        return null;
-//
-//    }
+    public Building getBuilding() {
+        Scanner userInput = new Scanner(System.in);
+        System.out.println("Select the type of building:(house/apartment)");
+        String type = userInput.nextLine();
+        if (type == null) {
+            return null;
+        }
+        if (type.equals("house")) {
+            return House.create();
+        }
+        if (type.equals("apartment")) {
+
+            return ApartmentBuilding.create();
+        }
+        return null;
+
+    }
 }
